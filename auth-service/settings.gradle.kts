@@ -1,0 +1,9 @@
+
+rootProject.name = "auth-service"
+
+
+
+
+
+
+

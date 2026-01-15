@@ -16,7 +16,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-
 group = "com.secudoc"
 version = "0.0.1-SNAPSHOT"
 description = "Authentication Service"
@@ -37,6 +36,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")

@@ -10,8 +10,11 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+  
+  jwt: 
+    secret: 3K1cqx8DSB90Es51uq+4NmZ+qNUBCcRWgMUca3mCn7I=

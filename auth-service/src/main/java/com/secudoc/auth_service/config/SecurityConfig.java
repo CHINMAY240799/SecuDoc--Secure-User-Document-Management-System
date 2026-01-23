@@ -1,5 +1,8 @@
 package com.secudoc.auth_service.config;
 
+import java.util.Base64;
+
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +40,7 @@ public class SecurityConfig {
 
         // Authorization rules
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/auth/register","/api/auth/health").permitAll()
+            .requestMatchers("/api/auth/register","/api/auth/health","/api/auth/login").permitAll()
             .anyRequest().authenticated()
         )
 
@@ -71,8 +74,8 @@ public class SecurityConfig {
     @Bean
     public JwtDecoder jwtDecoder() {
 
-        SecretKeySpec secretKey =
-                new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+        byte[] keyBytes = Base64.getDecoder().decode(secret);
+        SecretKey secretKey = new SecretKeySpec(keyBytes, "HmacSHA256");
 
         return NimbusJwtDecoder.withSecretKey(secretKey).build();
     }
@@ -80,10 +83,9 @@ public class SecurityConfig {
     @Bean
     public JwtEncoder jwtEncoder() {
 
-        SecretKeySpec secretKey =
-                new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+        byte[] keyBytes = Base64.getDecoder().decode(secret);
 
-        return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey));
+        return new NimbusJwtEncoder(new ImmutableSecret<>(keyBytes));
     }
  
 }

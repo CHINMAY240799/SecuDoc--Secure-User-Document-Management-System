@@ -16,5 +16,10 @@ spring:
       hibernate:
         format_sql: true
   
-  jwt: 
-    secret: 3K1cqx8DSB90Es51uq+4NmZ+qNUBCcRWgMUca3mCn7I=
+  logging:
+    level:
+      com.secudoc.auth_service: DEBUG
+  
+#  jwt:
+#    secret:3K1cqx8DSB90Es51uq+4NmZ+qNUBCcRWgMUca3mCn7I=
+# 

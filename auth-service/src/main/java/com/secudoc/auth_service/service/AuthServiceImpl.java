@@ -1,5 +1,8 @@
 package com.secudoc.auth_service.service;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +17,8 @@ import com.secudoc.auth_service.security.JwtService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-
+    
+	private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -52,7 +56,9 @@ public class AuthServiceImpl implements AuthService {
     
     @Override
     public String login(LoginRequest request) {
-
+      
+    	log.info("Login attempt for username: {}", request.getUsername());
+    try {
         Authentication authentication =
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
@@ -60,7 +66,20 @@ public class AuthServiceImpl implements AuthService {
                                 request.getPassword()
                         )
                 );
-
+        
         return jwtService.generateToken(authentication.getName());
+    }
+    
+    catch (Exception e){
+    	
+    	log.error("Authentication FAILED for user: {}", request.getUsername());
+        log.error("Reason: {}", e.getMessage());
+
+        throw e;
+    	
+    	
+    }
+
+        
     }
 }

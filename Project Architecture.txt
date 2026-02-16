@@ -117,6 +117,8 @@ users_credentials
 POST /auth/login
 POST /auth/refresh
 POST /auth/validate
+POST /auth/validate
+
 ```
 
 ### Key Concepts You’ll Learn

@@ -1,5 +1,6 @@
 package com.secudoc.auth_service.service;
 
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.secudoc.auth_service.dto.LoginRequest;
 import com.secudoc.auth_service.dto.RegisterUser;
+import com.secudoc.auth_service.dto.ValidateTokenResponse;
 import com.secudoc.auth_service.entity.UserEntity;
 import com.secudoc.auth_service.repository.UserRepository;
 import com.secudoc.auth_service.security.JwtService;
@@ -81,5 +83,16 @@ public class AuthServiceImpl implements AuthService {
     }
 
         
+    }
+    
+    @Override
+    public ValidateTokenResponse validate(String token) {
+    	 if (!jwtService.isTokenValid(token)) {
+             return new ValidateTokenResponse(false);
+         }
+
+         String username = jwtService.extractUsername(token);
+
+         return new ValidateTokenResponse(true, username, List.of("USER"));
     }
 }

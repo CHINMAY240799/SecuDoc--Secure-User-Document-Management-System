@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.secudoc.auth_service.dto.LoginRequest;
 import com.secudoc.auth_service.dto.RegisterUser;
+import com.secudoc.auth_service.dto.ValidateTokenRequest;
+import com.secudoc.auth_service.dto.ValidateTokenResponse;
 import com.secudoc.auth_service.service.AuthService;
 
 @RestController
@@ -49,6 +51,12 @@ public class AuthController {
         log.info("Login Controller called");
         return ResponseEntity.ok(Map.of("token", token));
     }
+    
+    @PostMapping("/validate")
+    public ValidateTokenResponse validate(@RequestBody ValidateTokenRequest request) {
+        return authService.validate(request.getToken());
+    }
+
 }
 
 	

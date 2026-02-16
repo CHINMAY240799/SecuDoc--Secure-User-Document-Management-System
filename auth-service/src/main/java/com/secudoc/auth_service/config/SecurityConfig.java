@@ -40,7 +40,8 @@ public class SecurityConfig {
 
         // Authorization rules
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/auth/register","/api/auth/health","/api/auth/login").permitAll()
+           // .requestMatchers("/api/auth/register","/api/auth/health","/api/auth/login").permitAll()
+        		 .requestMatchers("/api/auth/**").permitAll()
             .anyRequest().authenticated()
         )
 
@@ -60,6 +61,7 @@ public class SecurityConfig {
         
     }
     
+    // To store Password in database
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

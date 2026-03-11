@@ -29,7 +29,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getURI().getPath();
         
-        // Public endpoints
+        // If it is auth api then delegate to the next filter
         if (path.startsWith("/auth/login") || path.startsWith("/auth/register"))
             return chain.filter(exchange);
 

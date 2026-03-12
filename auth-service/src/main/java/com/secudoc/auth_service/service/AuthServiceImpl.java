@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.secudoc.auth_service.dto.LoginRequest;
 import com.secudoc.auth_service.dto.RegisterUser;
+import com.secudoc.auth_service.dto.UserRegisteredEvent;
 import com.secudoc.auth_service.dto.ValidateTokenResponse;
 import com.secudoc.auth_service.entity.UserEntity;
 import com.secudoc.auth_service.repository.UserRepository;
@@ -25,17 +26,21 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserEventProducer eventProducer;
+    
 
     public AuthServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            AuthenticationManager authenticationManager,
-                           JwtService jwtService) {
+                           JwtService jwtService,
+                           UserEventProducer eventProducer) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-    }
+        this.eventProducer = eventProducer;
+        		}
 
     @Override
     public void register(RegisterUser request) {
@@ -53,7 +58,14 @@ public class AuthServiceImpl implements AuthService {
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
 
         // Save to DB
-        userRepository.save(user);
+        UserEntity savedUser = userRepository.save(user);
+        
+        //
+        UserRegisteredEvent event = new UserRegisteredEvent(
+                savedUser.getId(),
+                savedUser.getUsername()
+            );
+        eventProducer.publishUserRegistered(event);
     }
     
     @Override

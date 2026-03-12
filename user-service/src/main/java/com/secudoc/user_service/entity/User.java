@@ -8,16 +8,30 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="users")
+@Table(name="users", schema = "user_schema")
 @Data
 public class User {
 
     @Id
-    private String id;
+    private Long id;
 
-    private String username;
+    public Long getId() {
+		return id;
+	}
 
-    private String email;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    private Instant createdAt;
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	private String username;
+
+    private Instant createdAt = Instant.now();
 }

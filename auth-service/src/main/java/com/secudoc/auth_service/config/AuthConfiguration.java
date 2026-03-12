@@ -5,9 +5,11 @@ import java.util.Base64;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -26,7 +28,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class AuthConfiguration {
     
 	@Value("${jwt.secret}")
 	private String secret;
@@ -88,6 +90,16 @@ public class SecurityConfig {
         byte[] keyBytes = Base64.getDecoder().decode(secret);
 
         return new NimbusJwtEncoder(new ImmutableSecret<>(keyBytes));
-    }
+    }   
+
+        @Bean
+        public NewTopic userRegisteredTopic() {
+            return TopicBuilder
+                    .name("user-registered-topic")
+                    .partitions(1)
+                    .replicas(1)
+                    .build();
+        }
+  
  
 }

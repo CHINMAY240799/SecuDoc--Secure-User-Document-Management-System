@@ -20,15 +20,16 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: user-service-group
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      
 
       properties:
         spring.json.trusted.packages: "*"
         spring.json.value.default.type: com.secudoc.user_service.dto.UserRegisteredEvent
     listener:
-      missing-topics-fatal: false
+       missing-topics-fatal: false  
 
 server:
   port: 8082

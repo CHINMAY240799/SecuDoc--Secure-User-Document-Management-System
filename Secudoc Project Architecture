@@ -1,19 +1,9 @@
-Perfect 👍
-Now I’ll define **everything end-to-end** for your **Secure User & Document Management System**, **exactly the way a real 3-year Spring Boot developer would do it**, and we’ll **intentionally choose Microservices Architecture**.
 
-Think of this as your **“career-switch flagship project”** — interviewers will treat you like an experienced dev if you explain it this way.
-
----
 
 # 🚀 Secure User & Document Management System
 
 **Architecture: Microservices | Spring Boot | Production-grade**
 
-![Image](https://spring.io/img/extra/microservices-6.svg)
-
-![Image](https://www.researchgate.net/publication/337033544/figure/fig1/AS%3A822009059614720%401572993640753/A-Secure-Document-Management-System-Environment.ppm)
-
-![Image](https://media.geeksforgeeks.org/wp-content/uploads/20230718004641/API-Gateway-in-Microservices.png)
 
 ---
 
@@ -37,7 +27,7 @@ Organizations need:
 * Restrict document access
 * Track document access history
 
-👉 **Why microservices?**
+**Why microservices?**
 
 * Security isolation
 * Independent scaling
